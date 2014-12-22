@@ -4,7 +4,7 @@ This is an example of an API to serve Surveys applications. The application fron
 
 * The configuration is ready to deploy in Heroku
 
-* To run in a local webserver you need Ruby 2.1.2 and Rails 4.1.6
+* To run in a local webserver you need Ruby 2.1.2, Rails 4.1.6 and PostgreSQL 9.3
 
 * I suggest to use RVM and then run the following in the application directory:
   * bundle install
