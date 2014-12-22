@@ -7,7 +7,7 @@ This is an example of an API to serve Surveys applications. The application fron
 * To run in a local webserver you need Ruby 2.1.2 and Rails 4.1.6
 
 * I suggest to use RVM and then run the following in the application directory:
-	* bundle install
-	* rake db:create
-	* rake db:migrate
-	* rails s
+  * bundle install
+  * rake db:create
+  * rake db:migrate
+  * rails s
