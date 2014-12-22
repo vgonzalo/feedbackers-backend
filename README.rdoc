@@ -1,28 +1,13 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an example of an API to serve Surveys applications. The application frontend using AngularJS is here: https://github.com/vgonzalo/feedbackers-frontend
 
-Things you may want to cover:
+* The configuration is ready to deploy in Heroku
 
-* Ruby version
+* To run in a local webserver you need Ruby 2.1.2 and Rails 4.1.6
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* I suggest to use RVM and then run the following in the application directory:
+	* bundle install
+	* rake db:create
+	* rake db:migrate
+	* rails s
