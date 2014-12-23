@@ -8,11 +8,17 @@ module API
         expose :title
       end
 
+      class AnswerData < Grape::Entity
+        expose :value
+        expose :items
+      end
+
       class Question < Grape::Entity
         expose :id
         expose :title
         expose :question_type
         expose :question_items, using: API::V1::Entities::QuestionItem
+        expose :answer_data, using: API::V1::Entities::AnswerData
       end
 
       class User < Grape::Entity
@@ -25,6 +31,7 @@ module API
         expose :name
         expose :users, using: API::V1::Entities::User
         expose :questions, using: API::V1::Entities::Question
+        expose :messages
       end
 
     end
@@ -35,7 +42,8 @@ module API
       resource :companies do
         desc "Return all companies"
         get "", root: :companies do
-          Company.all
+          companies = Company.all
+          present :companies, companies, with: API::V1::Entities::Company
         end
 
         desc "Return a company"
@@ -43,7 +51,7 @@ module API
           requires :id, type: Integer, desc: "ID of the contact"
         end
         get ":id" do
-          Contact.where(id: params[:id]).first!
+          Company.find params[:id]
         end
 
         desc "Create a company"

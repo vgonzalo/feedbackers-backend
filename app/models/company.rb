@@ -25,4 +25,8 @@ class Company < ActiveRecord::Base
     self.save
   end
 
+  def messages
+    self.surveys.pluck(:message).reject(&:empty?)
+  end
+
 end
