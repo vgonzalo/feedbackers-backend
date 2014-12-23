@@ -19,7 +19,6 @@ class Survey < ActiveRecord::Base
   def init params
     self.customer = Customer.find params[:customer_id] if not params[:customer_id].nil?
     self.company  = Company.find params[:company_id]   if not params[:company_id].nil?
-    self.user     = User.find params[:user_id]         if not params[:user_id].nil?
     self.code     = get_code
     self.answered = false
     self.save
@@ -27,6 +26,7 @@ class Survey < ActiveRecord::Base
 
   def save_answers params
     self.answered = true
+    self.user = User.find params[:user_id] if not params[:user_id].nil?
     
   end
 

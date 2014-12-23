@@ -21,7 +21,6 @@ module API
         params do
           requires :customer_id, type: Integer, desc: "Customer Id"
           requires :company_id,  type: Integer, desc: "Company Id"
-          requires :user_id,     type: Integer, desc: "User Id"
         end
         post do
           survey = Survey.new
@@ -32,10 +31,11 @@ module API
         params do
           requires :survey_id, type: Integer, desc: "Survey Id"
           requires :answers,   type: Hash,    desc: "Answers"
+          requires :user_id,   type: Integer, desc: "User Id"
         end
         put do
           survey = Survey.find params[:survey_id]
-          survey.save_answers
+          survey.save_answers params
         end
       end
     end
