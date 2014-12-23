@@ -1,5 +1,5 @@
 ActiveAdmin.register Question do
 
-  permit_params :question_type, :title, :survey_id
+  permit_params :question_type, :title, :company_id
 
 end

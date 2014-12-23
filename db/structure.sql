@@ -147,7 +147,7 @@ CREATE TABLE answers (
     id integer NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    question_id_id integer,
+    question_id integer,
     value integer,
     items hstore
 );
@@ -244,7 +244,7 @@ CREATE TABLE question_items (
     id integer NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    question_id_id integer,
+    question_id integer,
     title character varying(255)
 );
 
@@ -276,9 +276,9 @@ CREATE TABLE questions (
     id integer NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    survey_id_id integer,
     title character varying(255),
-    question_type character varying(255)
+    question_type character varying(255),
+    company_id integer
 );
 
 
@@ -318,9 +318,9 @@ CREATE TABLE surveys (
     id integer NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    company_id_id integer,
-    user_id_id integer,
-    customer_id_id integer,
+    company_id integer,
+    user_id integer,
+    customer_id integer,
     code character varying(255),
     answered boolean DEFAULT false
 );
@@ -354,7 +354,7 @@ CREATE TABLE users (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     name character varying(255),
-    company_id_id integer
+    company_id integer
 );
 
 
@@ -512,45 +512,45 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON admin_users USI
 
 
 --
--- Name: index_answers_on_question_id_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_answers_on_question_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_answers_on_question_id_id ON answers USING btree (question_id_id);
-
-
---
--- Name: index_question_items_on_question_id_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_question_items_on_question_id_id ON question_items USING btree (question_id_id);
+CREATE INDEX index_answers_on_question_id ON answers USING btree (question_id);
 
 
 --
--- Name: index_questions_on_survey_id_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_question_items_on_question_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_questions_on_survey_id_id ON questions USING btree (survey_id_id);
-
-
---
--- Name: index_surveys_on_company_id_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_surveys_on_company_id_id ON surveys USING btree (company_id_id);
+CREATE INDEX index_question_items_on_question_id ON question_items USING btree (question_id);
 
 
 --
--- Name: index_surveys_on_customer_id_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_questions_on_company_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_surveys_on_customer_id_id ON surveys USING btree (customer_id_id);
+CREATE INDEX index_questions_on_company_id ON questions USING btree (company_id);
 
 
 --
--- Name: index_surveys_on_user_id_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_surveys_on_company_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_surveys_on_user_id_id ON surveys USING btree (user_id_id);
+CREATE INDEX index_surveys_on_company_id ON surveys USING btree (company_id);
+
+
+--
+-- Name: index_surveys_on_customer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_surveys_on_customer_id ON surveys USING btree (customer_id);
+
+
+--
+-- Name: index_surveys_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_surveys_on_user_id ON surveys USING btree (user_id);
 
 
 --
@@ -583,4 +583,6 @@ INSERT INTO schema_migrations (version) VALUES ('20141222204228');
 INSERT INTO schema_migrations (version) VALUES ('20141222204345');
 
 INSERT INTO schema_migrations (version) VALUES ('20141222204506');
+
+INSERT INTO schema_migrations (version) VALUES ('20141223011148');
 

@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
   
-  belongs_to :survey
+  belongs_to :company
   has_many :answers
   has_many :question_items
 

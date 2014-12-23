@@ -24,6 +24,19 @@ module API
         post do
           Company.where(name: params[:name]).first_or_create
         end
+
+        desc "Update questions"
+        params do
+          requires :company_id, type: Integer, desc: "Id of company"
+          requires :questions,  type: Array,   desc: "Array of questions"
+        end
+        put do
+          company = Company.find params[:company_id]
+          if not company.nil? and params[:questions].size > 0
+            company.save_questions params
+          end
+        end
+
       end
     end
   end
