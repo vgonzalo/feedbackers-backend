@@ -1,5 +1,18 @@
 module API
   module V1
+    
+    module Entities
+      
+      class Survey < Grape::Entity
+        expose :id
+        expose :company, using: API::V1::Entities::Company
+        expose :customer, using: API::V1::Entities::Customer
+        expose :answered
+        expose :code
+      end
+
+    end
+
     class Surveys < Grape::API
       include API::V1::Defaults
 
@@ -14,7 +27,18 @@ module API
           requires :id, type: Integer, desc: "ID of the survey"
         end
         get ":id" do
-          Survey.where(id: params[:id]).first!
+          Survey.find params[:id]
+        end
+
+        desc "Return a survey using a code"
+        params do
+          requires :code, type: String, desc: "Code of the survey"
+        end
+        get "/code/:code" do
+          survey = Survey.find_by_code params[:code]
+          if not survey.nil? and not survey.answered
+            present :survey, survey, with: API::V1::Entities::Survey
+          end
         end
 
         desc "Create a survey"

@@ -1,5 +1,34 @@
 module API
   module V1
+    
+    module Entities
+
+      class QuestionItem < Grape::Entity
+        expose :id
+        expose :title
+      end
+
+      class Question < Grape::Entity
+        expose :id
+        expose :title
+        expose :question_type
+        expose :question_items, using: API::V1::Entities::QuestionItem
+      end
+
+      class User < Grape::Entity
+        expose :id
+        expose :name
+      end
+
+      class Company < Grape::Entity
+        expose :id
+        expose :name
+        expose :users, using: API::V1::Entities::User
+        expose :questions, using: API::V1::Entities::Question
+      end
+
+    end
+
     class Companies < Grape::API
       include API::V1::Defaults
 

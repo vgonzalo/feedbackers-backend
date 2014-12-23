@@ -1,5 +1,15 @@
 module API
   module V1
+    
+    module Entities
+      
+      class Customer < Grape::Entity
+        expose :id
+        expose :name
+        expose :phone_number
+      end
+    end
+
     class Customers < Grape::API
       include API::V1::Defaults
 
