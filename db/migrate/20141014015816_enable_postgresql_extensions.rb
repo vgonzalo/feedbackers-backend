@@ -5,5 +5,6 @@ class EnablePostgresqlExtensions < ActiveRecord::Migration
     enable_extension "pg_trgm"
     enable_extension "fuzzystrmatch"
     enable_extension "unaccent"
+    enable_extension "hstore"
   end
 end
