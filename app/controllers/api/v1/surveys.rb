@@ -36,7 +36,11 @@ module API
         end
         get "/code/:code" do
           survey = Survey.find_by_code params[:code]
-          if not survey.nil? and not survey.answered
+          if survey.nil?
+            {message: "There is no survey in this page"}
+          elsif survey.answered
+            {message: "This survey has been completed"}
+          else
             present :survey, survey, with: API::V1::Entities::Survey
           end
         end
@@ -53,12 +57,13 @@ module API
 
         desc "Answer a survey"
         params do
-          requires :survey_id, type: Integer, desc: "Survey Id"
-          requires :answers,   type: Hash,    desc: "Answers"
-          requires :user_id,   type: Integer, desc: "User Id"
+          requires :id,      type: Integer, desc: "Survey Id"
+          requires :answers, type: Array,   desc: "Answers"
+          requires :user_id, type: Integer, desc: "User Id"
+          requires :message, type: String,  desc: "Message"
         end
         put do
-          survey = Survey.find params[:survey_id]
+          survey = Survey.find params[:id]
           survey.save_answers params
         end
       end

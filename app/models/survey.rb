@@ -6,7 +6,7 @@ class Survey < ActiveRecord::Base
   belongs_to :company
   belongs_to :user
 
-  has_many :questions
+  has_many :answers
 
   def get_code
     random_code = 0
@@ -26,8 +26,14 @@ class Survey < ActiveRecord::Base
 
   def save_answers params
     self.answered = true
-    self.user = User.find params[:user_id] if not params[:user_id].nil?
-    
+    self.message  = params[:message]
+    self.user     = User.find params[:user_id]
+    self.answers  = []
+    params[:answers].each do |answer|
+      answer_params = ActionController::Parameters.new answer
+      self.answers << (Answer.new answer_params.permit!)
+    end
+    self.save
   end
 
 end

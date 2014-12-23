@@ -149,7 +149,8 @@ CREATE TABLE answers (
     updated_at timestamp without time zone,
     question_id integer,
     value integer,
-    items hstore
+    items hstore,
+    survey_id integer
 );
 
 
@@ -322,7 +323,8 @@ CREATE TABLE surveys (
     user_id integer,
     customer_id integer,
     code character varying(255),
-    answered boolean DEFAULT false
+    answered boolean DEFAULT false,
+    message text DEFAULT ''::text
 );
 
 
@@ -519,6 +521,13 @@ CREATE INDEX index_answers_on_question_id ON answers USING btree (question_id);
 
 
 --
+-- Name: index_answers_on_survey_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_answers_on_survey_id ON answers USING btree (survey_id);
+
+
+--
 -- Name: index_question_items_on_question_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -585,4 +594,8 @@ INSERT INTO schema_migrations (version) VALUES ('20141222204345');
 INSERT INTO schema_migrations (version) VALUES ('20141222204506');
 
 INSERT INTO schema_migrations (version) VALUES ('20141223011148');
+
+INSERT INTO schema_migrations (version) VALUES ('20141223150530');
+
+INSERT INTO schema_migrations (version) VALUES ('20141223154425');
 
