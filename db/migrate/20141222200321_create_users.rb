@@ -3,7 +3,7 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.timestamps
       t.string :name
-      t.references :company_id
+      t.references :company
     end
   end
 end
