@@ -1,32 +1,39 @@
+# == Schema Information
+#
+# Table name: companies
+#
+#  id         :integer          not null, primary key
+#  created_at :datetime
+#  updated_at :datetime
+#  name       :string(255)
+#
+
 class Company < ActiveRecord::Base
-  
   has_many :users
   has_many :surveys
   has_many :questions
 
-  def save_questions params
+  def save_questions(params)
     # Add questions
-    if not params[:questions].nil? and params[:questions].size > 0
+    if params[:questions] && params[:questions].any?
       params[:questions].each do |q|
         question = Question.new
         question.title         = q.title
         question.question_type = q.question_type
         # Add items in questions
-        if ['checkbox', 'select'].include? q.question_type and q[:question_items].size > 0
+        if %w(checkbox select).include?(q.question_type) && q[:question_items].any?
           q[:question_items].each do |i|
-            question_item = QuestionItem.new
-            question_item.title = i.title
+            question_item = QuestionItem.create(title: i.title)
             question.question_items << question_item
           end
         end
-        self.questions << question
+        questions << question
       end
     end
-    self.save
+    save
   end
 
   def messages
-    self.surveys.pluck(:message).reject(&:empty?)
+    surveys.pluck(:message).reject(&:empty?)
   end
-
 end

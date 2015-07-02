@@ -1,8 +1,6 @@
 module API
   module V1
-    
     module Entities
-
       class QuestionItem < Grape::Entity
         expose :id
         expose :title
@@ -33,47 +31,43 @@ module API
         expose :questions, using: API::V1::Entities::Question
         expose :messages
       end
-
     end
 
     class Companies < Grape::API
       include API::V1::Defaults
 
       resource :companies do
-        desc "Return all companies"
-        get "", root: :companies do
+        desc 'Return all companies'
+        get '', root: :companies do
           companies = Company.all
           present :companies, companies, with: API::V1::Entities::Company
         end
 
-        desc "Return a company"
+        desc 'Return a company'
         params do
-          requires :id, type: Integer, desc: "ID of the contact"
+          requires :id, type: Integer, desc: 'ID of the contact'
         end
-        get ":id" do
+        get ':id' do
           Company.find params[:id]
         end
 
-        desc "Create a company"
+        desc 'Create a company'
         params do
-          requires :name, type: String, desc: "Company Name"
+          requires :name, type: String, desc: 'Company Name'
         end
         post do
           Company.where(name: params[:name]).first_or_create
         end
 
-        desc "Update questions"
+        desc 'Update questions'
         params do
-          requires :company_id, type: Integer, desc: "Id of company"
-          requires :questions,  type: Array,   desc: "Array of questions"
+          requires :company_id, type: Integer, desc: 'Id of company'
+          requires :questions,  type: Array,   desc: 'Array of questions'
         end
         put do
           company = Company.find params[:company_id]
-          if not company.nil? and params[:questions].size > 0
-            company.save_questions params
-          end
+          company.save_questions params if company && params[:questions].any?
         end
-
       end
     end
   end
