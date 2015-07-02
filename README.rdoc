@@ -1,4 +1,4 @@
-== README
+== Feedbackers API
 
 This is an example of an API to serve Surveys applications. The application frontend using AngularJS is here: https://github.com/vgonzalo/feedbackers-frontend
 
